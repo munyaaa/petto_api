@@ -1,4 +1,4 @@
-/// A very good dart package
-library;
+/// Domain package
+library domain;
 
-export 'src/domain.dart';
+export 'src/requests/requests.dart';
