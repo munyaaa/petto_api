@@ -11,6 +11,10 @@ dependencies:
   domain:
     path: packages/domain
   postgres: ^3.4.1
+  repositories:
+    path: packages/repositories
+  services:
+    path: packages/services
 
 dev_dependencies:
   migrant: ^0.3.0
