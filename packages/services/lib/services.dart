@@ -1,4 +1,4 @@
-/// A very good dart package
-library;
+/// Services package
+library services;
 
-export 'src/services.dart';
+export 'src/services/services.dart';
