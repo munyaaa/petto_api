@@ -6,6 +6,12 @@ publish_to: none
 environment:
   sdk: "^3.3.0"
 
+dependencies:
+  domain:
+    path: ../domain
+  hashids2: ^2.0.0
+  postgres: ^3.4.1
+
 dev_dependencies:
   mocktail: ^1.0.3
   test: ^1.25.2

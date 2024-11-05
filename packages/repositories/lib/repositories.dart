@@ -1,4 +1,4 @@
-/// A very good dart package
-library;
+/// Repositories package
+library repositories;
 
-export 'src/repositories.dart';
+export 'src/auth_repository.dart';
