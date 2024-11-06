@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   dart_frog: ^1.0.0
+  dart_frog_auth: ^1.1.0
   data:
     path: packages/data
   postgres: ^3.4.1
