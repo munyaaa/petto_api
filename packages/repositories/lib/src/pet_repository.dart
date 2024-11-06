@@ -23,6 +23,7 @@ abstract class PetRepository {
     required int age,
     required num weight,
   });
+  Future<int?> deletePet(int id);
 }
 
 class PetRepositoryImpl implements PetRepository {
@@ -168,6 +169,31 @@ class PetRepositoryImpl implements PetRepository {
         'name': name,
         'age': age,
         'weight': weight,
+      },
+    ).onError(
+      (error, stackTrace) => Future.error(
+        error.toString(),
+      ),
+    ))
+        .firstOrNull;
+
+    if (result == null) {
+      return null;
+    }
+
+    return result.toColumnMap()['id'] as int?;
+  }
+
+  @override
+  Future<int?> deletePet(int id) async {
+    final result = (await (await db).execute(
+      Sql.named('''
+                DELETE FROM pets
+                WHERE id = @id
+                RETURNING id;
+              '''),
+      parameters: {
+        'id': id,
       },
     ).onError(
       (error, stackTrace) => Future.error(

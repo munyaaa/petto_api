@@ -18,6 +18,7 @@ abstract class PetService {
     int id, {
     required UpdatePetRequest request,
   });
+  Future<int> deletePet(int id);
 }
 
 class PetServiceImpl implements PetService {
@@ -132,6 +133,17 @@ class PetServiceImpl implements PetService {
       age: age,
       weight: weight,
     );
+
+    if (petId == null) {
+      throw Exception('Failed to save pet');
+    }
+
+    return petId;
+  }
+
+  @override
+  Future<int> deletePet(int id) async {
+    final petId = await petRepository.deletePet(id);
 
     if (petId == null) {
       throw Exception('Failed to save pet');
