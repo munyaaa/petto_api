@@ -3,6 +3,10 @@ import 'package:repositories/repositories.dart';
 
 abstract class PetService {
   Future<List<PetTypeResponse>> getPetTypes();
+  Future<int> createPet({
+    required int userId,
+    required CreateUpdatePetRequest request,
+  });
 }
 
 class PetServiceImpl implements PetService {
@@ -23,5 +27,34 @@ class PetServiceImpl implements PetService {
           ),
         )
         .toList();
+  }
+
+  @override
+  Future<int> createPet({
+    required int userId,
+    required CreateUpdatePetRequest request,
+  }) async {
+    final typeId = request.typeId;
+    final name = request.name;
+    final age = request.age;
+    final weight = request.weight;
+
+    if (typeId == null || name == null || age == null || weight == null) {
+      throw Exception('Incomplete Data');
+    }
+
+    final petId = await petRepository.postPet(
+      userId: userId,
+      typeId: typeId,
+      name: name,
+      age: age,
+      weight: weight,
+    );
+
+    if (petId == null) {
+      throw Exception('Failed to save pet');
+    }
+
+    return petId;
   }
 }
