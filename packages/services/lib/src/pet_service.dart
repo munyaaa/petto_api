@@ -5,7 +5,7 @@ abstract class PetService {
   Future<List<PetTypeResponse>> getPetTypes();
   Future<int> createPet({
     required int userId,
-    required CreateUpdatePetRequest request,
+    required CreatePetRequest request,
   });
   Future<PetDetailResponse> getPetById(
     int id, {
@@ -13,6 +13,10 @@ abstract class PetService {
   });
   Future<List<PetResponse>> getAllPets({
     required int userId,
+  });
+  Future<int> updatePet(
+    int id, {
+    required UpdatePetRequest request,
   });
 }
 
@@ -39,7 +43,7 @@ class PetServiceImpl implements PetService {
   @override
   Future<int> createPet({
     required int userId,
-    required CreateUpdatePetRequest request,
+    required CreatePetRequest request,
   }) async {
     final typeId = request.typeId;
     final name = request.name;
@@ -107,5 +111,32 @@ class PetServiceImpl implements PetService {
           ),
         )
         .toList();
+  }
+
+  @override
+  Future<int> updatePet(
+    int id, {
+    required UpdatePetRequest request,
+  }) async {
+    final name = request.name;
+    final age = request.age;
+    final weight = request.weight;
+
+    if (name == null || age == null || weight == null) {
+      throw Exception('Incomplete Data');
+    }
+
+    final petId = await petRepository.updatePet(
+      id,
+      name: name,
+      age: age,
+      weight: weight,
+    );
+
+    if (petId == null) {
+      throw Exception('Failed to save pet');
+    }
+
+    return petId;
   }
 }

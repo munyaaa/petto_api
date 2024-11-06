@@ -38,7 +38,7 @@ Future<Response> _onPost(RequestContext context) async {
         'data': {
           'id': await petService.createPet(
             userId: userId,
-            request: CreateUpdatePetRequest.fromJson(body ?? {}),
+            request: CreatePetRequest.fromJson(body ?? {}),
           ),
         },
       },
