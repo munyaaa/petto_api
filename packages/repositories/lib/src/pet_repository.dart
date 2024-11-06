@@ -10,6 +10,10 @@ abstract class PetRepository {
     required int age,
     required num weight,
   });
+  Future<PetDetailEntity?> getPet(
+    int id, {
+    required int userId,
+  });
 }
 
 class PetRepositoryImpl implements PetRepository {
@@ -71,5 +75,36 @@ class PetRepositoryImpl implements PetRepository {
         .singleOrNull;
 
     return result?.toColumnMap()['id'] as int?;
+  }
+
+  @override
+  Future<PetDetailEntity?> getPet(
+    int id, {
+    required int userId,
+  }) async {
+    final result = (await (await db).execute(
+      Sql.named('''
+                SELECT p.id, p.name, p.age, p.weight, pt.type, pt.image_url
+                FROM pets p
+                JOIN pet_types pt ON pt.id = p.type_id
+                WHERE p.user_id = @user_id;
+              '''),
+      parameters: {
+        'user_id': userId,
+      },
+    ).onError(
+      (error, stackTrace) => Future.error(
+        error.toString(),
+      ),
+    ))
+        .firstOrNull;
+
+    if (result == null) {
+      return null;
+    }
+
+    return PetDetailEntity.fromMap(
+      result.toColumnMap(),
+    );
   }
 }
