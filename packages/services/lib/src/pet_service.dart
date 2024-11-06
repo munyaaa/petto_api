@@ -11,6 +11,9 @@ abstract class PetService {
     int id, {
     required int userId,
   });
+  Future<List<PetResponse>> getAllPets({
+    required int userId,
+  });
 }
 
 class PetServiceImpl implements PetService {
@@ -84,5 +87,25 @@ class PetServiceImpl implements PetService {
       weight: pet.weight,
       imageUrl: pet.imageUrl,
     );
+  }
+
+  @override
+  Future<List<PetResponse>> getAllPets({
+    required int userId,
+  }) async {
+    final pets = await petRepository.getAllPets(
+      userId: userId,
+    );
+
+    return pets
+        .map(
+          (e) => PetResponse(
+            id: e.id,
+            name: e.name,
+            type: e.type,
+            imageUrl: e.imageUrl,
+          ),
+        )
+        .toList();
   }
 }
