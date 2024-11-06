@@ -7,6 +7,10 @@ abstract class PetService {
     required int userId,
     required CreateUpdatePetRequest request,
   });
+  Future<PetDetailResponse> getPetById(
+    int id, {
+    required int userId,
+  });
 }
 
 class PetServiceImpl implements PetService {
@@ -56,5 +60,29 @@ class PetServiceImpl implements PetService {
     }
 
     return petId;
+  }
+
+  @override
+  Future<PetDetailResponse> getPetById(
+    int id, {
+    required int userId,
+  }) async {
+    final pet = await petRepository.getPet(
+      id,
+      userId: userId,
+    );
+
+    if (pet == null) {
+      throw Exception('Pet not found');
+    }
+
+    return PetDetailResponse(
+      id: pet.id,
+      name: pet.name,
+      type: pet.type,
+      age: pet.age,
+      weight: pet.weight,
+      imageUrl: pet.imageUrl,
+    );
   }
 }
