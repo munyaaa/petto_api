@@ -1,4 +1,4 @@
 /// Services package
 library services;
 
-export 'src/services/services.dart';
+export 'src/auth_service.dart';
