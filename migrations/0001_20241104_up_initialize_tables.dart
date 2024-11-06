@@ -12,7 +12,9 @@ Future<void> main() async {
           CREATE TABLE pet_types (
             id SERIAL PRIMARY KEY,
             type VARCHAR(255) NOT NULL UNIQUE, 
-            image_url TEXT          
+            image_url TEXT,
+            created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+            updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()     
           );
       ''',
       '''
