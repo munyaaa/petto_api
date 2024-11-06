@@ -1,4 +1,4 @@
-import 'package:domain/domain.dart';
+import 'package:data/data.dart';
 import 'package:postgres/postgres.dart';
 
 abstract class AuthRepository {

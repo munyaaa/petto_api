@@ -7,8 +7,8 @@ environment:
   sdk: "^3.3.0"
 
 dependencies:
-  domain:
-    path: ../domain
+  data:
+    path: ../data
   hashids2: ^2.0.0
   postgres: ^3.4.1
 

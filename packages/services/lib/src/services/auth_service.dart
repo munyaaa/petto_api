@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:bcrypt/bcrypt.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
-import 'package:domain/domain.dart';
+import 'package:data/data.dart';
 import 'package:repositories/repositories.dart';
 
 abstract class AuthService {

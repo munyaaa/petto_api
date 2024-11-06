@@ -9,8 +9,8 @@ environment:
 dependencies:
   bcrypt: ^1.1.3
   dart_jsonwebtoken: ^2.14.0
-  domain:
-    path: ../domain
+  data:
+    path: ../data
   repositories:
     path: ../repositories
 

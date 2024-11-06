@@ -8,8 +8,8 @@ environment:
 
 dependencies:
   dart_frog: ^1.0.0
-  domain:
-    path: packages/domain
+  data:
+    path: packages/data
   postgres: ^3.4.1
   repositories:
     path: packages/repositories

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
-import 'package:domain/domain.dart';
+import 'package:data/data.dart';
 import 'package:services/services.dart';
 
 FutureOr<Response> onRequest(RequestContext context) {
