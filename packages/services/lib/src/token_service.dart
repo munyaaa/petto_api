@@ -4,6 +4,7 @@ import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
 abstract class TokenService {
   int? verifyToken(String token);
+  int? getUserIdByToken(String token);
 }
 
 class TokenServiceImpl implements TokenService {
@@ -27,5 +28,11 @@ class TokenServiceImpl implements TokenService {
     } catch (e) {
       return null;
     }
+  }
+
+  @override
+  int? getUserIdByToken(String token) {
+    final data = JWT.tryDecode(token)?.payload as Map<String, dynamic>;
+    return int.tryParse(data['sub'] as String? ?? '');
   }
 }
