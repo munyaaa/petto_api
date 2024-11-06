@@ -17,6 +17,12 @@ abstract class PetRepository {
   Future<List<PetEntity>> getAllPets({
     required int userId,
   });
+  Future<int?> updatePet(
+    int id, {
+    required String name,
+    required int age,
+    required num weight,
+  });
 }
 
 class PetRepositoryImpl implements PetRepository {
@@ -138,5 +144,42 @@ class PetRepositoryImpl implements PetRepository {
           ),
         )
         .toList();
+  }
+
+  @override
+  Future<int?> updatePet(
+    int id, {
+    required String name,
+    required int age,
+    required num weight,
+  }) async {
+    final result = (await (await db).execute(
+      Sql.named('''
+                UPDATE pets
+                SET name = @name,
+                    age = @age,
+                    weight = @weight,
+                    updated_at = NOW()
+                WHERE id = @id
+                RETURNING id;
+              '''),
+      parameters: {
+        'id': id,
+        'name': name,
+        'age': age,
+        'weight': weight,
+      },
+    ).onError(
+      (error, stackTrace) => Future.error(
+        error.toString(),
+      ),
+    ))
+        .firstOrNull;
+
+    if (result == null) {
+      return null;
+    }
+
+    return result.toColumnMap()['id'] as int?;
   }
 }
