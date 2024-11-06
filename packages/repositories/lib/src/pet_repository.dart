@@ -14,6 +14,9 @@ abstract class PetRepository {
     int id, {
     required int userId,
   });
+  Future<List<PetEntity>> getAllPets({
+    required int userId,
+  });
 }
 
 class PetRepositoryImpl implements PetRepository {
@@ -23,17 +26,18 @@ class PetRepositoryImpl implements PetRepository {
 
   @override
   Future<List<PetTypeEntity>> getPetTypes() async {
-    final result = await (await db).execute(
-      Sql.named('''
+    final result = await (await db)
+        .execute(
+          Sql.named('''
                 SELECT id, type, image_url, created_at, updated_at
                 FROM pet_types;
               '''),
-      parameters: {},
-    ).onError(
-      (error, stackTrace) => Future.error(
-        error.toString(),
-      ),
-    );
+        )
+        .onError(
+          (error, stackTrace) => Future.error(
+            error.toString(),
+          ),
+        );
 
     return result
         .map(
@@ -87,9 +91,10 @@ class PetRepositoryImpl implements PetRepository {
                 SELECT p.id, p.name, p.age, p.weight, pt.type, pt.image_url
                 FROM pets p
                 JOIN pet_types pt ON pt.id = p.type_id
-                WHERE p.user_id = @user_id;
+                WHERE p.id = @id AND p.user_id = @user_id;
               '''),
       parameters: {
+        'id': id,
         'user_id': userId,
       },
     ).onError(
@@ -106,5 +111,32 @@ class PetRepositoryImpl implements PetRepository {
     return PetDetailEntity.fromMap(
       result.toColumnMap(),
     );
+  }
+
+  @override
+  Future<List<PetEntity>> getAllPets({required int userId}) async {
+    final result = await (await db).execute(
+      Sql.named('''
+                SELECT p.id, p.name, pt.type, pt.image_url
+                FROM pets p
+                JOIN pet_types pt ON pt.id = p.type_id
+                WHERE p.user_id = @user_id;
+              '''),
+      parameters: {
+        'user_id': userId,
+      },
+    ).onError(
+      (error, stackTrace) => Future.error(
+        error.toString(),
+      ),
+    );
+
+    return result
+        .map(
+          (e) => PetEntity.fromMap(
+            e.toColumnMap(),
+          ),
+        )
+        .toList();
   }
 }
