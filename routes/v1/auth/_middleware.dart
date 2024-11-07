@@ -10,7 +10,13 @@ Handler middleware(Handler handler) {
         provider<AuthService>(
           (context) => AuthServiceImpl(
             authRepository: context.read<AuthRepository>(),
+            tokenService: context.read<TokenService>(),
           ),
+        ),
+      )
+      .use(
+        provider<TokenService>(
+          (context) => TokenServiceImpl(),
         ),
       )
       .use(

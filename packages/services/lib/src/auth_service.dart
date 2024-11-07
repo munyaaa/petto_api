@@ -1,9 +1,7 @@
-import 'dart:io';
-
 import 'package:bcrypt/bcrypt.dart';
-import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:data/data.dart';
 import 'package:repositories/repositories.dart';
+import 'package:services/services.dart';
 
 abstract class AuthService {
   Future<int> register(RegisterRequest request);
@@ -11,9 +9,13 @@ abstract class AuthService {
 }
 
 class AuthServiceImpl implements AuthService {
-  AuthServiceImpl({required this.authRepository});
+  AuthServiceImpl({
+    required this.authRepository,
+    required this.tokenService,
+  });
 
   final AuthRepository authRepository;
+  final TokenService tokenService;
 
   @override
   Future<int> register(RegisterRequest request) async {
@@ -63,27 +65,11 @@ class AuthServiceImpl implements AuthService {
       throw Exception('Wrong password!');
     }
 
-    final token = _generateToken(user.id);
+    final token = tokenService.generateToken(user.id);
     if (token == null) {
       throw Exception('Failed to generate token!');
     }
 
     return token;
-  }
-
-  String? _generateToken(int id) {
-    final jwt = JWT({
-      'sub': id.toString(),
-    });
-
-    final tokenSecret = Platform.environment['TOKEN_SECRET'];
-
-    if (tokenSecret == null) {
-      return null;
-    }
-
-    return jwt.sign(
-      SecretKey(tokenSecret),
-    );
   }
 }
