@@ -17,9 +17,9 @@ class AuthServiceImpl implements AuthService {
 
   @override
   Future<int> register(RegisterRequest request) async {
-    final email = request.email ?? '';
-    if (email.isEmpty) {
-      throw Exception('Email cannot be empty!');
+    final username = request.username ?? '';
+    if (username.isEmpty) {
+      throw Exception('username cannot be empty!');
     }
     final password = request.password ?? '';
     if (password.isEmpty) {
@@ -27,7 +27,7 @@ class AuthServiceImpl implements AuthService {
     }
 
     final userId = await authRepository.createUser(
-      email: email,
+      username: username,
       hashedPassword: BCrypt.hashpw(
         password,
         BCrypt.gensalt(),
@@ -43,9 +43,9 @@ class AuthServiceImpl implements AuthService {
 
   @override
   Future<String> login(LoginRequest request) async {
-    final email = request.email ?? '';
-    if (email.isEmpty) {
-      throw Exception('Email cannot be empty!');
+    final username = request.username ?? '';
+    if (username.isEmpty) {
+      throw Exception('Username cannot be empty!');
     }
 
     final password = request.password ?? '';
@@ -53,7 +53,7 @@ class AuthServiceImpl implements AuthService {
       throw Exception('Password cannot be empty!');
     }
 
-    final user = await authRepository.getUser(email: email);
+    final user = await authRepository.getUser(username: username);
 
     if (user == null) {
       throw Exception('User not found!');

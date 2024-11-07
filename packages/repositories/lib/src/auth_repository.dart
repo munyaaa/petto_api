@@ -3,11 +3,11 @@ import 'package:postgres/postgres.dart';
 
 abstract class AuthRepository {
   Future<int?> createUser({
-    required String email,
+    required String username,
     required String hashedPassword,
   });
   Future<UserEntity?> getUser({
-    required String email,
+    required String username,
   });
 }
 
@@ -20,17 +20,17 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<int?> createUser({
-    required String email,
+    required String username,
     required String hashedPassword,
   }) async {
     final result = (await (await db).execute(
       Sql.named('''
-            INSERT INTO users (email, hashed_password)
-            VALUES (@email, @hashed_password)
+            INSERT INTO users (username, hashed_password)
+            VALUES (@username, @hashed_password)
             RETURNING id;
           '''),
       parameters: {
-        'email': email,
+        'username': username,
         'hashed_password': hashedPassword,
       },
     ).onError(
@@ -45,16 +45,16 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<UserEntity?> getUser({
-    required String email,
+    required String username,
   }) async {
     final result = (await (await db).execute(
       Sql.named('''
-            SELECT id, email, hashed_password 
+            SELECT id, username, hashed_password 
             FROM users 
-            WHERE email=@email;
+            WHERE username=@username;
           '''),
       parameters: {
-        'email': email,
+        'username': username,
       },
     ).onError(
       (error, stackTrace) => Future.error(
