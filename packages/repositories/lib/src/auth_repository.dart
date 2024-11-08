@@ -9,6 +9,7 @@ abstract class AuthRepository {
   Future<UserEntity?> getUser({
     required String username,
   });
+  Future<int?> findUserById(int id);
 }
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -70,5 +71,30 @@ class AuthRepositoryImpl implements AuthRepository {
     return UserEntity.fromMap(
       result.toColumnMap(),
     );
+  }
+
+  @override
+  Future<int?> findUserById(int id) async {
+    final result = (await (await db).execute(
+      Sql.named('''
+            SELECT id
+            FROM users 
+            WHERE id=@id;
+          '''),
+      parameters: {
+        'id': id,
+      },
+    ).onError(
+      (error, stackTrace) => Future.error(
+        error.toString(),
+      ),
+    ))
+        .singleOrNull;
+
+    if (result == null) {
+      return null;
+    }
+
+    return result.toColumnMap()['id'] as int?;
   }
 }

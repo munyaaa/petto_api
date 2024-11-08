@@ -15,6 +15,13 @@ Middleware bearerAuthenticationMiddleware() {
               return null;
             }
 
+            final authService = context.read<AuthService>();
+            final isUserExists = await authService.isUserExists(userId);
+
+            if (!isUserExists) {
+              return null;
+            }
+
             return userId;
           } catch (e) {
             return null;

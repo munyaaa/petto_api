@@ -6,6 +6,7 @@ import 'package:services/services.dart';
 abstract class AuthService {
   Future<int> register(RegisterRequest request);
   Future<String> login(LoginRequest request);
+  Future<bool> isUserExists(int id);
 }
 
 class AuthServiceImpl implements AuthService {
@@ -71,5 +72,11 @@ class AuthServiceImpl implements AuthService {
     }
 
     return token;
+  }
+
+  @override
+  Future<bool> isUserExists(int id) async {
+    final userId = await authRepository.findUserById(id);
+    return userId != null;
   }
 }
