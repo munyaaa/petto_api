@@ -4,7 +4,36 @@
 [![License: MIT][license_badge]][license_link]
 [![Powered by Dart Frog](https://img.shields.io/endpoint?url=https://tinyurl.com/dartfrog-badge)](https://dartfrog.vgv.dev)
 
-An example application built with dart_frog
+
+# Getting Started
+
+## Run Docker Compose
+
+```bash
+docker compose up -d
+```
+
+## Export Environment
+```bash
+export DB_HOST=localhost DB_NAME=postgres DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=postgres TOKEN_SECRET=DP59jWm5WoekGVxyGtDqC6wK1tfS8mIm
+```
+
+## Run Migrations
+### Migrate up
+```bash
+dart run migrations/20241107_up_initialization.dart
+dart run migrations/20241107_up_seed_pet_types.dart
+```
+### Migrate down
+```bash
+dart run migrations/20241107_down_initialization.dart
+dart run migrations/20241107_down_seed_pet_types.dart
+```
+
+## Run
+```bash
+dart_dev run
+```
 
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [license_link]: https://opensource.org/licenses/MIT
