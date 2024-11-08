@@ -37,6 +37,7 @@ class TokenServiceImpl implements TokenService {
     return int.tryParse(data['sub'] as String? ?? '');
   }
 
+  @override
   String? generateToken(int id) {
     final jwt = JWT({
       'sub': id.toString(),
