@@ -4,6 +4,11 @@
 [![License: MIT][license_badge]][license_link]
 [![Powered by Dart Frog](https://img.shields.io/endpoint?url=https://tinyurl.com/dartfrog-badge)](https://dartfrog.vgv.dev)
 
+# Before Started
+Don't forget to activate the dart_frog_cli
+```bash
+dart pub global activate dart_frog_cli
+```
 
 # Getting Started
 
