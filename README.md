@@ -35,7 +35,7 @@ dart run migrations/20241121_2055_down_initialization.dart
 
 ## Run Seeds
 ```bash
-dart run migrations/20241121_2120_seed_pet_types.dart
+dart run seeds/20241121_2120_seed_pet_types.dart
 ```
 
 ## Run
