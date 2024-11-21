@@ -27,12 +27,15 @@ export DB_HOST=localhost DB_NAME=postgres DB_PORT=5432 DB_USERNAME=postgres DB_P
 ### Migrate up
 ```bash
 dart run migrations/20241121_2055_up_initialization.dart
-dart run migrations/20241121_2100_up_seed_pet_types.dart
 ```
 ### Migrate down
 ```bash
 dart run migrations/20241121_2055_down_initialization.dart
-dart run migrations/20241121_2100_down_seed_pet_types.dart
+```
+
+## Run Seeds
+```bash
+dart run migrations/20241121_2120_seed_pet_types.dart
 ```
 
 ## Run
