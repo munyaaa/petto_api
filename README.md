@@ -40,7 +40,7 @@ dart run seeds/20241121_2120_seed_pet_types.dart
 
 ## Run
 ```bash
-dart_dev run
+dart_frog dev
 ```
 
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
