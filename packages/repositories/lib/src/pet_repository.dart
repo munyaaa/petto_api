@@ -3,7 +3,7 @@ import 'package:postgres/postgres.dart';
 
 abstract class PetRepository {
   Future<List<PetTypeEntity>> getPetTypes();
-  Future<int?> postPet({
+  Future<int?> insertPet({
     required int userId,
     required int typeId,
     required String name,
@@ -56,7 +56,7 @@ class PetRepositoryImpl implements PetRepository {
   }
 
   @override
-  Future<int?> postPet({
+  Future<int?> insertPet({
     required int userId,
     required int typeId,
     required String name,

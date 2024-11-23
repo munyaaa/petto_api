@@ -55,7 +55,7 @@ class PetServiceImpl implements PetService {
       throw Exception('Incomplete Data');
     }
 
-    final petId = await petRepository.postPet(
+    final petId = await petRepository.insertPet(
       userId: userId,
       typeId: typeId,
       name: name,
